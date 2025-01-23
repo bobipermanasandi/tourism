@@ -13,35 +13,38 @@ class BookmarkScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Bookmark List"),
       ),
-      body: Consumer<BookmarkListProvider>(builder: (context, value, child) {
-        final bookmarkList = value.bookmarkList;
-        return switch (bookmarkList.isNotEmpty) {
-          true => ListView.builder(
-              itemCount: bookmarkList.length,
-              itemBuilder: (context, index) {
-                final tourism = bookmarkList[index];
-                return TourismCard(
-                  tourism: tourism,
-                  onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      NavigationRoute.detailRoute.name,
-                      arguments: tourism,
-                    );
-                  },
-                );
-              },
-            ),
-          _ => const Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("No Bookmarked"),
-                ],
+      body: Consumer<BookmarkListProvider>(
+        builder: (context, value, child) {
+          final bookmarkList = value.bookmarkList;
+          return switch (bookmarkList.isNotEmpty) {
+            true => ListView.builder(
+                itemCount: bookmarkList.length,
+                itemBuilder: (context, index) {
+                  final tourism = bookmarkList[index];
+
+                  return TourismCard(
+                    tourism: tourism,
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        NavigationRoute.detailRoute.name,
+                        arguments: tourism.id,
+                      );
+                    },
+                  );
+                },
               ),
-            ),
-        };
-      }),
+            _ => const Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("No Bookmarked"),
+                  ],
+                ),
+              ),
+          };
+        },
+      ),
     );
   }
 }

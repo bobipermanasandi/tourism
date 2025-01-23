@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tourism/provider/index_nav_provider.dart';
+import 'package:tourism/provider/main/index_nav_provider.dart';
 import 'package:tourism/screen/bookmark/bookmark_screen.dart';
 import 'package:tourism/screen/home/home_screen.dart';
 
@@ -13,8 +13,8 @@ class MainScreen extends StatelessWidget {
       body: Consumer<IndexNavProvider>(
         builder: (context, value, child) {
           return switch (value.indexBottomNavBar) {
-            1 => const BookmarkScreen(),
-            _ => const HomeScreen(),
+            0 => const HomeScreen(),
+            _ => const BookmarkScreen(),
           };
         },
       ),

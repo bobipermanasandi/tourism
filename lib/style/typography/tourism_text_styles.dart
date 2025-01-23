@@ -1,12 +1,9 @@
 import 'package:flutter/widgets.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class TourismTextStyles {
-//  static const TextStyle _commonStyle = TextStyle(
-//    fontFamily: 'IBMPlexSansCondensed',
-//  );
-
-  static final TextStyle _commonStyle = GoogleFonts.ibmPlexSansCondensed();
+  static const TextStyle _commonStyle = TextStyle(
+    fontFamily: 'IBMPlexSansCondensed',
+  );
 
   /// displayLarge Text Style
   static TextStyle displayLarge = _commonStyle.copyWith(

@@ -3,6 +3,26 @@ import 'package:tourism/style/colors/tourism_colors.dart';
 import 'package:tourism/style/typography/tourism_text_styles.dart';
 
 class TourismTheme {
+  static ThemeData get lightTheme {
+    return ThemeData(
+      colorSchemeSeed: TourismColors.blue.color,
+      brightness: Brightness.light,
+      textTheme: _textTheme,
+      useMaterial3: true,
+      appBarTheme: _appBarTheme,
+    );
+  }
+
+  static ThemeData get darkTheme {
+    return ThemeData(
+      colorSchemeSeed: TourismColors.blue.color,
+      brightness: Brightness.dark,
+      textTheme: _textTheme,
+      useMaterial3: true,
+      appBarTheme: _appBarTheme,
+    );
+  }
+
   static TextTheme get _textTheme {
     return TextTheme(
       displayLarge: TourismTextStyles.displayLarge,
@@ -32,26 +52,6 @@ class TourismTheme {
           bottomRight: Radius.circular(14),
         ),
       ),
-    );
-  }
-
-  static ThemeData get lightTheme {
-    return ThemeData(
-      colorSchemeSeed: TourismColors.blue.color,
-      brightness: Brightness.light,
-      textTheme: _textTheme,
-      useMaterial3: true,
-      appBarTheme: _appBarTheme,
-    );
-  }
-
-  static ThemeData get darkTheme {
-    return ThemeData(
-      colorSchemeSeed: TourismColors.blue.color,
-      brightness: Brightness.dark,
-      textTheme: _textTheme,
-      useMaterial3: true,
-      appBarTheme: _appBarTheme,
     );
   }
 }
