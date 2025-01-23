@@ -1,12 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tourism/model/tourism.dart';
+import 'package:tourism/provider/detail/bookmark_list_provider.dart';
+import 'package:tourism/provider/index_nav_provider.dart';
 import 'package:tourism/screen/detail/detail_screen.dart';
 import 'package:tourism/screen/main/main_screen.dart';
 import 'package:tourism/static/navigation_route.dart';
 import 'package:tourism/style/theme/tourism_theme.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => IndexNavProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => BookmarkListProvider(),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
