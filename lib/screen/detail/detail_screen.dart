@@ -35,13 +35,14 @@ class DetailScreen extends StatelessWidget {
                       children: [
                         Text(
                           tourism.name,
-                          style: const TextStyle(fontSize: 18),
+                          style: Theme.of(context).textTheme.headlineLarge,
                         ),
                         Text(
                           tourism.address,
-                          style: const TextStyle(
-                            fontSize: 12,
-                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelLarge
+                              ?.copyWith(fontWeight: FontWeight.w400),
                         ),
                       ],
                     ),
@@ -50,7 +51,10 @@ class DetailScreen extends StatelessWidget {
                     children: [
                       const Icon(Icons.favorite),
                       const SizedBox.square(dimension: 4),
-                      Text(tourism.like.toString())
+                      Text(
+                        tourism.like.toString(),
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      )
                     ],
                   ),
                 ],
@@ -58,6 +62,7 @@ class DetailScreen extends StatelessWidget {
               const SizedBox.square(dimension: 16),
               Text(
                 tourism.description,
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
             ],
           ),

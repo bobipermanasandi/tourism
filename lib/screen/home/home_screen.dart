@@ -16,6 +16,7 @@ class HomeScreen extends StatelessWidget {
         itemCount: tourismList.length,
         itemBuilder: (context, index) {
           final tourism = tourismList[index];
+
           return TourismCard(
             tourism: tourism,
             onTap: () {
