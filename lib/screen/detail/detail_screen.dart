@@ -2,12 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tourism/data/api/api_service.dart';
-import 'package:tourism/data/model/tourism.dart';
-import 'package:tourism/data/model/tourism_detail_response.dart';
 import 'package:tourism/provider/detail/bookmark_icon_provider.dart';
+import 'package:tourism/provider/detail/tourism_detail_provider.dart';
 import 'package:tourism/screen/detail/body_of_detail_screen_widget.dart';
 import 'package:tourism/screen/detail/bookmark_icon_widget.dart';
+import 'package:tourism/static/tourism_detail_result_state.dart';
 
 class DetailScreen extends StatefulWidget {
   final int tourismId;
@@ -22,14 +21,16 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
-  final Completer<Tourism> _completerTourism = Completer<Tourism>();
-  late Future<TourismDetailResponse> _futureTourismDetail;
-
   @override
   void initState() {
     super.initState();
-
-    _futureTourismDetail = ApiServices().getTourismDetail(widget.tourismId);
+    Future.microtask(() {
+      if (mounted) {
+        context
+            .read<TourismDetailProvider>()
+            .fetchTourismDetail(widget.tourismId);
+      }
+    });
   }
 
   @override
@@ -40,12 +41,11 @@ class _DetailScreenState extends State<DetailScreen> {
         actions: [
           ChangeNotifierProvider(
             create: (context) => BookmarkIconProvider(),
-            child: FutureBuilder(
-              future: _completerTourism.future,
-              builder: (context, snapshot) {
-                return switch (snapshot.connectionState) {
-                  ConnectionState.done =>
-                    BookmarkIconWidget(tourism: snapshot.data!),
+            child: Consumer<TourismDetailProvider>(
+              builder: (context, value, child) {
+                return switch (value.resultState) {
+                  TourismDetailLoadedState(data: var tourism) =>
+                    BookmarkIconWidget(tourism: tourism),
                   _ => const SizedBox(),
                 };
               },
@@ -53,26 +53,19 @@ class _DetailScreenState extends State<DetailScreen> {
           ),
         ],
       ),
-      body: FutureBuilder(
-        future: _futureTourismDetail,
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.waiting:
-              return const Center(
+      body: Consumer<TourismDetailProvider>(
+        builder: (context, value, child) {
+          return switch (value.resultState) {
+            TourismDetailLoadingState() => const Center(
                 child: CircularProgressIndicator(),
-              );
-            case ConnectionState.done:
-              if (snapshot.hasError) {
-                return Center(
-                  child: Text(snapshot.error.toString()),
-                );
-              }
-              final tourismData = snapshot.data!.place;
-              _completerTourism.complete(tourismData);
-              return BodyOfDetailScreenWidget(tourism: tourismData);
-            default:
-              return const SizedBox();
-          }
+              ),
+            TourismDetailLoadedState(data: var tourism) =>
+              BodyOfDetailScreenWidget(tourism: tourism),
+            TourismDetailErrorState(error: var message) => Center(
+                child: Text(message),
+              ),
+            _ => const SizedBox(),
+          };
         },
       ),
     );

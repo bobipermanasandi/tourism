@@ -44,7 +44,7 @@ class _BookmarkIconWidgetState extends State<BookmarkIconWidget> {
         } else {
           bookmarkListProvider.addBookmark(widget.tourism);
         }
-        bookmarkIconProvider.isBookmarked = !isBookmarked;
+        context.read<BookmarkIconProvider>().isBookmarked = !isBookmarked;
       },
       icon: Icon(
         context.watch<BookmarkIconProvider>().isBookmarked

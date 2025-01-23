@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:tourism/data/model/tourism.dart';
 
 class BodyOfDetailScreenWidget extends StatelessWidget {
-  final Tourism tourism;
   const BodyOfDetailScreenWidget({
     super.key,
     required this.tourism,
   });
+
+  final Tourism tourism;
 
   @override
   Widget build(BuildContext context) {
