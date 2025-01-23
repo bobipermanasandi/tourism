@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tourism/model/tourism.dart';
+import 'package:tourism/screen/detail/bookmark_icon_widget.dart';
 
 class DetailScreen extends StatelessWidget {
   final Tourism tourism;
@@ -14,6 +15,9 @@ class DetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Tourism Detail"),
+        actions: [
+          BookmarkIconWidget(tourism: tourism),
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -25,6 +29,7 @@ class DetailScreen extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
               const SizedBox.square(dimension: 16),
+              // todo-09: change the text style
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -49,7 +54,10 @@ class DetailScreen extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      const Icon(Icons.favorite),
+                      const Icon(
+                        Icons.favorite,
+                        color: Colors.pink,
+                      ),
                       const SizedBox.square(dimension: 4),
                       Text(
                         tourism.like.toString(),
